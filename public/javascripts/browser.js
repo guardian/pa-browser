@@ -14,6 +14,16 @@ jQuery(function($){
             }
             return dom;
         })(),
+        hints = {
+            teamID: {
+                label: "Machester United",
+                value: "1006"
+            },
+            playerID: {
+                label: "Joe Hart",
+                value: "Joe_Hart"
+            }
+        },
         currentFields = {},
         createReplacements = function() {
             var r = /({.*?})/g,
@@ -28,21 +38,32 @@ jQuery(function($){
                     addReplacementField(field);
                 }
             });
-            $.each(currentFields, function(_, currentField){
-                if (-1 === $.inArray(currentField, fields)) {
-                    currentFields[currentField].remove();
-                    delete currentFields[currentField];
+            $.each(currentFields, function(currentFieldName, _){
+                if (-1 === $.inArray(currentFieldName, fields)) {
+                    currentFields[currentFieldName].remove();
+                    delete currentFields[currentFieldName];
                 }
             });
         },
         addReplacementField = function(name) {
             var field = $("<div class='param-field'><label>" + name + ": <input type='text' name='" + name + "' /></label></div>");
+            if (hints.hasOwnProperty(name)) {
+                field.append($("<a href='#' class='hint' data-value='" + hints[name].value + "'>&larr; " + hints[name].label + "</a>"));
+            }
             currentFields[name] = field;
             dom.parameters.append(field);
+        },
+        insertHint = function(hintLink) {
+            $(hintLink.parent()).find("input").val(hintLink.data("value"));
         };
 
     dom.query.on("change", createReplacements);
+    dom.query.on("keyup", createReplacements);
     dom.query.on("paste", function(){
         setTimeout(createReplacements, 10);
+    });
+    dom.parameters.on("click", ".hint", function(e) {
+        e.preventDefault();
+        insertHint($(this));
     });
 });
