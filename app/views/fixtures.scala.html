@@ -1,0 +1,13 @@
+@(fixtures: List[pa.Fixture])
+
+@main("Fixtures") {
+
+    <h1>Fixtures</h1>
+
+    <ul>
+    @for(fixture <- fixtures) {
+        <li>@fixture.id <strong>@fixture.homeTeam.name</strong> vs <strong>@fixture.awayTeam.name</strong> @fixture.date.toString(util.DateTimeFormats.dateTime)</li>
+    }
+    </ul>
+
+}

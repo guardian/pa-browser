@@ -1,7 +1,32 @@
-@(message: String)
+@()
 
-@main("Welcome to Play") {
+@main("PA API browser") {
 
-    @play20.welcome(message)
+    <h1>PA browser</h1>
 
+    <form action="/browser" method="POST" class="browser-form">
+        <input type="text" class="query" name="query" />
+        <div class="parameters">
+
+        </div>
+        <input type="submit" value="Perform API query" />
+    </form>
+
+    <h2>Some formatted examples</h2>
+    <ul>
+        <li>
+            <form action="/fixtures">
+                <h3>Fixtures</h3>
+                <label for="fixtures_competitionId">Competition ID</label> <input type="text" name="competitionId" id="fixtures_competitionId" />
+                <input type="submit" value="Go" />
+            </form>
+        </li>
+        <li>
+            <form action="/table">
+                <h3>League tables</h3>
+                <label for="table_competitionId">Competition ID</label> <input type="text" name="competitionId" id="table_competitionId" />
+                <input type="submit" value="Go" />
+            </form>
+        </li>
+    </ul>
 }
