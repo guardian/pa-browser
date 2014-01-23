@@ -22,6 +22,14 @@ jQuery(function($){
             playerID: {
                 label: "Joe Hart",
                 value: "Joe_Hart"
+            },
+            competitionID: {
+                label: "Premier league 2013/14",
+                value: "100"
+            },
+            competition: {
+                label: "Premier league 2013/14",
+                value: "100"
             }
         },
         currentFields = {},
@@ -49,6 +57,9 @@ jQuery(function($){
             var field = $("<div class='param-field'><label>" + name + ": <input type='text' name='" + name + "' /></label></div>");
             if (hints.hasOwnProperty(name)) {
                 field.append($("<a href='#' class='hint' data-value='" + hints[name].value + "'>&larr; " + hints[name].label + "</a>"));
+            }
+            if (/Date$/.test(name)) {
+                field.find("input").datepicker({dateFormat: 'yymmdd'})
             }
             currentFields[name] = field;
             dom.parameters.append(field);

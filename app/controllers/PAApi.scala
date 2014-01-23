@@ -20,15 +20,25 @@ object PAApi extends Controller with ExecutionContexts {
     val query = getOneOrFail(submission, "query")
     val replacements = """(\{.*?\})""".r.findAllIn(query).toList.filter("{apiKey}"!=)
     val replacedQuery = replacements.foldLeft(query){ case (replacingQuery, replacement) =>
-      replacingQuery.replace(replacement, getOneOrFail(submission, replacement.dropWhile('{'==).takeWhile('}'!=)))
+      val fieldName = replacement.dropWhile('{' ==).dropWhile('*' ==).takeWhile('}' !=)
+      if (replacement.startsWith("{*")) {
+        getOne(submission, fieldName).map { newValue =>
+          replacingQuery.replace(replacement, newValue)
+        }.getOrElse(replacingQuery.replace("/" + replacement, ""))
+      }
+      else {
+        replacingQuery.replace(replacement, getOneOrFail(submission, fieldName))
+      }
     }
     SeeOther("/browser/%s".format(replacedQuery.dropWhile('/' ==)))
   }
 
   def browser(query: String) = Action.async { implicit request =>
     val replacedQuery = URLDecoder.decode(query, "UTF-8").replace("{apiKey}", Client.apiKey)
-    Client.get("/" + replacedQuery).map{
-      Ok(_).as("application/xml")
+    Client.get("/" + replacedQuery).map{ content =>
+      val response = Ok(content)
+      if (replacedQuery.contains("/image/")) response.as("image/jpeg")
+      else response.as("application/xml")
     }
   }
 
@@ -50,7 +60,11 @@ object PAApi extends Controller with ExecutionContexts {
     }
   }
 
-  private def getOneOrFail(submission:Map[String, scala.Seq[String]], key: String): String = {
+  private def getOneOrFail(submission: Map[String, scala.Seq[String]], key: String): String = {
     URLDecoder.decode(submission.get(key).getOrElse { throw new Exception("Missing required submission parameter, %s".format(key)) }.head, "UTF-8")
+  }
+
+  private def getOne(submission: Map[String, scala.Seq[String]], key: String): Option[String] = {
+    submission.get(key).map(values => URLDecoder.decode(values.head, "UTF-8"))
   }
 }
