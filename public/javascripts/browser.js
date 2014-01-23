@@ -15,22 +15,42 @@ jQuery(function($){
             return dom;
         })(),
         hints = {
-            teamID: {
-                label: "Machester United",
-                value: "1006"
-            },
-            playerID: {
-                label: "Joe Hart",
-                value: "Joe_Hart"
-            },
-            competitionID: {
+            teamID: [
+                {
+                    label: "Spurs",
+                    value: "19"
+                },
+                {
+                    label: "Chelsea",
+                    value: "4"
+                },
+                {
+                    label: "Hull",
+                    value: "26"
+                },
+                {
+                    label: "Man Utd",
+                    value: "11"
+                }
+            ],
+            playerID: [
+                {
+                    label: "Joe Hart",
+                    value: "Joe_Hart"
+                },
+                {
+                    label: "Emmanuel Adebayor",
+                    value: "237670"
+                }
+            ],
+            seasonID: [{
+                label: "Premier league 2013/14",
+                value: "785"
+            }],
+            competitionID: [{
                 label: "Premier league 2013/14",
                 value: "100"
-            },
-            competition: {
-                label: "Premier league 2013/14",
-                value: "100"
-            }
+            }]
         },
         currentFields = {},
         createReplacements = function() {
@@ -56,7 +76,9 @@ jQuery(function($){
         addReplacementField = function(name) {
             var field = $("<div class='param-field'><label>" + name + ": <input type='text' name='" + name + "' /></label></div>");
             if (hints.hasOwnProperty(name)) {
-                field.append($("<a href='#' class='hint' data-value='" + hints[name].value + "'>&larr; " + hints[name].label + "</a>"));
+                $.each(hints[name], function(_, hint){
+                    field.append($("<a href='#' class='hint' data-value='" + hint.value + "'>&larr; " + hint.label + "</a>"));
+                });
             }
             if (/Date$/.test(name)) {
                 field.find("input").datepicker({dateFormat: 'yymmdd'})
@@ -67,6 +89,13 @@ jQuery(function($){
         insertHint = function(hintLink) {
             $(hintLink.parent()).find("input").val(hintLink.data("value"));
         };
+
+    // alias hints
+    hints.team1ID = hints.teamID;
+    hints.team2ID = hints.teamID;
+    hints.player1ID = hints.playerID;
+    hints.player2ID = hints.playerID;
+    hints.competition = hints.competitionID;
 
     dom.query.on("change", createReplacements);
     dom.query.on("keyup", createReplacements);

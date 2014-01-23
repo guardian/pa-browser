@@ -14,7 +14,6 @@ object Client extends PaClient with Http with ExecutionContexts {
   }
 
   override def GET(urlString: String): Future[pa.Response] = {
-    println(urlString)
     WS.url(urlString).get().map { response =>
       pa.Response(response.status, response.body/*.dropWhile(_ != '<')*/, response.statusText)
     }
