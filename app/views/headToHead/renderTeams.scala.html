@@ -1,0 +1,15 @@
+@(team1: pa.TeamHead2Head, team2: pa.TeamHead2Head)
+
+@main("Choose teams") {
+
+    <h1>Teams Head to Head</h1>
+
+    <div class="head-to-head-container">
+        <div class="head-to-head 1">
+            @views.html.fragments.head2HeadTeam(team1)
+        </div>
+        <div class="head-to-head 2">
+            @views.html.fragments.head2HeadTeam(team2)
+        </div>
+    </div>
+}
