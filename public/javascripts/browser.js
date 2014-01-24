@@ -30,7 +30,7 @@ jQuery(function($){
                 },
                 {
                     label: "Man Utd",
-                    value: "11"
+                    value: "12"
                 }
             ],
             playerID: [
@@ -43,6 +43,14 @@ jQuery(function($){
                     value: "237670"
                 }
             ],
+            matchID: [{
+                label: "Swansea v Spurs, 19/01/2014",
+                value: "3684146"
+            }],
+            managerID: [{
+                label: "Andre Villas-Boas",
+                value: "468795"
+            }],
             seasonID: [{
                 label: "Premier league 2013/14",
                 value: "785"
@@ -80,7 +88,7 @@ jQuery(function($){
                     field.append($("<a href='#' class='hint' data-value='" + hint.value + "'>&larr; " + hint.label + "</a>"));
                 });
             }
-            if (/Date$/.test(name)) {
+            if (/(Date|Day)$/.test(name)) {
                 field.find("input").datepicker({dateFormat: 'yymmdd'})
             }
             currentFields[name] = field;
