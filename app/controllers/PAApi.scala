@@ -37,7 +37,7 @@ object PAApi extends Controller with ExecutionContexts {
     val replacedQuery = URLDecoder.decode(query, "UTF-8").replace("{apiKey}", Client.apiKey)
     Client.get("/" + replacedQuery).map{ content =>
       val response = Ok(content)
-      if (replacedQuery.contains("/image/")) response.as("image/jpeg")
+      if (replacedQuery.contains("/image/")) response.as("image/png")
       else response.as("application/xml")
     }
   }

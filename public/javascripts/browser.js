@@ -31,6 +31,10 @@ jQuery(function($){
                 {
                     label: "Man Utd",
                     value: "12"
+                },
+                {
+                    label: "Newcastle",
+                    value: "31"
                 }
             ],
             playerID: [
@@ -58,7 +62,29 @@ jQuery(function($){
             competitionID: [{
                 label: "Premier league 2013/14",
                 value: "100"
-            }]
+            }],
+            type: [
+                {
+                    label: "Strikers",
+                    value: "Strikers"
+                },
+                {
+                    label: "Midfielders",
+                    value: "Midfielders"
+                },
+                {
+                    label: "Defenders",
+                    value: "Defenders"
+                },
+                {
+                    label: "GoalKeepers",
+                    value: "GoalKeepers"
+                },
+                {
+                    label: "Top100",
+                    value: "Top100"
+                }
+            ]
         },
         currentFields = {},
         createReplacements = function() {
@@ -88,7 +114,7 @@ jQuery(function($){
                     field.append($("<a href='#' class='hint' data-value='" + hint.value + "'>&larr; " + hint.label + "</a>"));
                 });
             }
-            if (/(Date|Day)$/.test(name)) {
+            if (/(Date|Day)$/.test(name) || "date" === name) {
                 field.find("input").datepicker({dateFormat: 'yymmdd'})
             }
             currentFields[name] = field;

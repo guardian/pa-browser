@@ -1,0 +1,10 @@
+@(players: List[pa.Player])
+
+@main(s"Squad images") {
+    @for(player <- players) {
+        <div class='player-image'>
+            <p>@player.name</p>
+            <img src="http://pads6.pa-sport.com/api/football/player/image/@pa.Client.apiKey/@player.id" alt="@player.name" />
+        </div>
+    }
+}
