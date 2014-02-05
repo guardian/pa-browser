@@ -23,19 +23,9 @@ object TeamController extends Controller with ExecutionContexts {
     }
   }
 
-  def chooseTeamsHead2Head = Action.async { implicit request =>
-    Client.competitions.flatMap { seasons =>
-      Future.sequence {
-        seasons.groupBy(_.competitionId).values.toList.map(a => a.maxBy(_.startDate.getYear)).map {
-          season =>
-            Client.teams(season.competitionId, season.startDate, season.endDate)
-        }
-      }.map { case result =>
-        result.flatten.distinct.sortBy(_.name)
-      }
-    }.map { teams =>
-      Ok(views.html.headToHead.chooseTeams(teams))
-    }
+  def chooseTeamsHead2Head = Action { implicit request =>
+    val teams = PA.teams.all
+    Ok(views.html.headToHead.chooseTeams(teams))
   }
 
   def redirectToTeamHead2Head = Action { implicit request =>
@@ -50,9 +40,9 @@ object TeamController extends Controller with ExecutionContexts {
     val premLeagueId = "100"
 
     FutureZippers.zip(
-      Client.teamHead2Head(team1Id, team2Id, new DateMidnight(2013, 07, 01), DateMidnight.now(), premLeagueId),
-      Client.teamResults(team1Id, new DateMidnight(2013, 07, 01)),
-      Client.teamResults(team2Id, new DateMidnight(2013, 07, 01))
+      Client.teamHead2Head(team1Id, team2Id, new DateMidnight(2013, 7, 1), DateMidnight.now(), premLeagueId),
+      Client.teamResults(team1Id, new DateMidnight(2013, 7, 1)),
+      Client.teamResults(team2Id, new DateMidnight(2013, 7, 1))
     ).map { case ((team1H2H, team2H2H), team1Results, team2Results) =>
       Ok(views.html.headToHead.renderTeams(
         team1H2H, team2H2H,
