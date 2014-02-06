@@ -3,7 +3,8 @@ jQuery(function($){
 
     var selectors = {
             query: ".query",
-            parameters: ".parameters"
+            parameters: ".parameters",
+            form: "form.browser-form"
         },
         dom = (function(){
             var dom = {};
@@ -135,6 +136,9 @@ jQuery(function($){
     dom.query.on("keyup", createReplacements);
     dom.query.on("paste", function(){
         setTimeout(createReplacements, 10);
+    });
+    dom.form.on("submit", function() {
+        dom.query.val(dom.query.val().replace("{", "%7B").replace("}", "%7D"));
     });
     dom.parameters.on("click", ".hint", function(e) {
         e.preventDefault();
