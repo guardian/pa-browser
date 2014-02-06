@@ -15,10 +15,15 @@ object PlayerController extends Controller with ExecutionContexts {
 
   def playerCard(playerId: String) = Action.async { request =>
     FutureZippers.zip(
-      Client.playerHead2Head(playerId, "1", new DateMidnight(2013, 7, 1), DateMidnight.now()),
+      Client.playerProfile(playerId),
+      Client.playerStats(playerId, new DateMidnight(2013, 7, 1), DateMidnight.now()),
       Client.appearances(playerId, new DateMidnight(2013, 7, 1), DateMidnight.now())
-    ).map { case ((playerh2h, _), playerAppearances) =>
-      Ok(views.html.player.playerCard(playerh2h, playerAppearances))
+    ).map { case (playerProfile, playerStats, playerAppearances) =>
+      playerProfile.position match {
+        case Some("Goal Keeper") => Ok(views.html.player.cards.goalkeeper(playerStats, playerAppearances))
+        case Some("Defender") => Ok(views.html.player.cards.defensive(playerStats, playerAppearances))
+        case _ => Ok(views.html.player.cards.offensive(playerStats, playerAppearances))
+      }
     }
   }
 
