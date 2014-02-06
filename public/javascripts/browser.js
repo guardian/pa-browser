@@ -4,7 +4,8 @@ jQuery(function($){
     var selectors = {
             query: ".query",
             parameters: ".parameters",
-            form: "form.browser-form"
+            form: "form.browser-form",
+            teamChange: '#team-change'
         },
         dom = (function(){
             var dom = {};
@@ -143,5 +144,10 @@ jQuery(function($){
     dom.parameters.on("click", ".hint", function(e) {
         e.preventDefault();
         insertHint($(this));
+    });
+
+    dom.teamChange.on("change", function() {
+        var select = this.elements.team;
+        window.location = '/team/images/'+ select.options[select.selectedIndex].value;
     });
 });
