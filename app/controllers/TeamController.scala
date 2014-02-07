@@ -41,10 +41,6 @@ object TeamController extends Controller with ExecutionContexts {
     SeeOther(s"/team/head2head/$team1Id/$team2Id")
   }
 
-  def position(teamId: String) = Action.async { request =>
-    Future(Ok(views.html.team.position(teamId, PA.teams.all)))
-  }
-
   def teamHead2Head(team1Id: String, team2Id: String) = Action.async { implicit request =>
 
     val premLeagueId = "100"
