@@ -1,0 +1,41 @@
+@(leagues: List[pa.Season], teams: List[pa.Team])
+
+@main("League tables") {
+    <h1>League Tables</h1>
+
+    <form action="/tables/league" method="post">
+        <h2>League table</h2>
+
+        @views.html.fragments.chooseLeague("competitionId", leagues)
+
+        <div class="form-group">
+            <div class="radio">
+                <label>
+                    <input type="radio" name="focus" value="none" checked />
+                    Show full league
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="focus" value="top" />
+                    Top of league
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="focus" value="bottom" />
+                    Bottom of league
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="focus" value="team" />
+                    Focus on a team (choose below)
+                </label>
+            </div>
+            @views.html.fragments.chooseTeam("teamId", teams)
+        </div>
+
+        <input type="submit" value="Generate" />
+    </form>
+}
