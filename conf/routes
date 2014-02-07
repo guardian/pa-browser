@@ -15,7 +15,10 @@ POST        /team/head2head                                controllers.TeamContr
 GET         /team/head2head/:team1Id/:team2Id              controllers.TeamController.teamHead2Head(team1Id: String, team2Id: String)
 GET         /team/images/:teamId                           controllers.TeamController.squadPictures(teamId: String)
 
+GET         /player                                        controllers.PlayerController.playerIndex
+POST        /player/head2head                              controllers.PlayerController.redirectToHead2Head
 GET         /player/head2head/:player1Id/:player2Id        controllers.PlayerController.head2Head(player1Id: String, player2Id: String)
+POST        /player/card                                   controllers.PlayerController.redirectToCard
 GET         /player/card/:playerId                         controllers.PlayerController.playerCard(playerId: String)
 
 # Map static resources from the /public folder to the /assets URL path
