@@ -1,0 +1,8 @@
+@(fieldName: String, teams: List[pa.Team])
+<div class="form-group">
+    <select name="@fieldName" id="id-@fieldName" class="form-control input-sm">
+        @for(team <- teams) {
+        <option value="@team.id">@team.name</option>
+        }
+    </select>
+</div>

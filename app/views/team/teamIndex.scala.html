@@ -1,0 +1,23 @@
+@(teams: List[pa.Team])
+
+@main("Teams") {
+    <h1>Teams</h1>
+
+    <form class="form-inline" role="form" action="/team/head2head" method="post">
+        <h2>Head to Head</h2>
+
+        @views.html.fragments.chooseTeam("team1", teams)
+        VS
+        @views.html.fragments.chooseTeam("team2", teams)
+
+        <button type="submit" class="btn btn-default">Fight!</button>
+    </form>
+
+    <form class="form-inline" role="form" action="/team/images" method="post">
+        <h2>Squad images</h2>
+
+        @views.html.fragments.chooseTeam("team", teams)
+
+        <button type="submit" class="btn btn-default">View</button>
+    </form>
+}
