@@ -47,23 +47,6 @@ object PAApi extends Controller with ExecutionContexts {
     }
   }
 
-  def fixtures = Action.async { implicit request =>
-    (request.getQueryString("competitionId") match {
-      case None => Client.fixtures
-      case Some(competitionId) => Client.fixtures(competitionId)
-    }).map { fixtures =>
-      Ok(views.html.fixtures(fixtures))
-    }
-  }
-
-  def leagueTable = Action.async { implicit request =>
-
-    val competitionId = request.getQueryString("competitionId").getOrElse { throw new Exception("Please provide a competitionId parameter") }
-    Client.leagueTable(competitionId, DateMidnight.now()).map { leagueTableEntries =>
-      Ok(views.html.tables(leagueTableEntries))
-    }
-  }
-
   private def getOneOrFail(submission: Map[String, scala.Seq[String]], key: String): String = {
     URLDecoder.decode(submission.get(key).getOrElse { throw new Exception("Missing required submission parameter, %s".format(key)) }.head, "UTF-8")
   }
