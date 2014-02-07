@@ -1,0 +1,18 @@
+@(currentTeamId: String, teams: List[pa.Team])
+
+@main(s"Team position table") {
+    <ul class="nav nav-pills controls">
+        <li class="dropdown">
+            <a data-toggle="dropdown" href="#">@if(currentTeamId != "0"){@currentTeamId}else{Choose a team} <b class="caret"></b></a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            @for(team <- teams) {
+                @if(team.id != currentTeamId){
+                    <li><a href="/team/position/@team.id">@team.name</a></li>
+                }
+            }
+            </ul>
+        </li>
+    </div>
+
+    
+}
