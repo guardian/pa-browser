@@ -10,9 +10,10 @@ GET         /browser/*query                                controllers.PAApi.bro
 GET         /fixtures                                      controllers.PAApi.fixtures
 GET         /table                                         controllers.PAApi.leagueTable
 
-GET         /team/head2head                                controllers.TeamController.chooseTeamsHead2Head
+GET         /team                                          controllers.TeamController.teamIndex
 POST        /team/head2head                                controllers.TeamController.redirectToTeamHead2Head
 GET         /team/head2head/:team1Id/:team2Id              controllers.TeamController.teamHead2Head(team1Id: String, team2Id: String)
+POST        /team/images                                   controllers.TeamController.redirectToSquadPictures
 GET         /team/images/:teamId                           controllers.TeamController.squadPictures(teamId: String)
 
 GET         /player                                        controllers.PlayerController.playerIndex
