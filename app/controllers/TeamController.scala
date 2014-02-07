@@ -23,6 +23,10 @@ object TeamController extends Controller with ExecutionContexts {
     }
   }
 
+  def position(teamId: String) = Action.async { request =>
+    Future(Ok(views.html.team.position(teamId, PA.teams.all)))
+  }
+
   def chooseTeamsHead2Head = Action { implicit request =>
     val teams = PA.teams.all
     Ok(views.html.headToHead.chooseTeams(teams))
