@@ -9,6 +9,7 @@ GET         /browser/*query                                controllers.PAApi.bro
 
 GET         /fixtures                                      controllers.PAApi.fixtures
 GET         /table                                         controllers.PAApi.leagueTable
+GET         /browse                                        controllers.PAApi.browse
 
 GET         /team/head2head                                controllers.TeamController.chooseTeamsHead2Head
 POST        /team/head2head                                controllers.TeamController.redirectToTeamHead2Head

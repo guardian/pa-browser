@@ -7,6 +7,7 @@ import pa.Client
 import util.ExecutionContexts
 import org.joda.time.DateMidnight
 import java.net.URLDecoder
+import scala.concurrent.Future
 
 
 object PAApi extends Controller with ExecutionContexts {
@@ -33,6 +34,10 @@ object PAApi extends Controller with ExecutionContexts {
     SeeOther("/browser/%s".format(replacedQuery.dropWhile('/' ==)))
   }
 
+  def browse = Action.async { implicit request =>
+    Future(Ok(views.html.browse()))
+  }
+
   def browser(query: String) = Action.async { implicit request =>
     val replacedQuery = URLDecoder.decode(query, "UTF-8").replace("{apiKey}", Client.apiKey)
     Client.get("/" + replacedQuery).map{ content =>
@@ -41,7 +46,6 @@ object PAApi extends Controller with ExecutionContexts {
       else response.as("application/xml")
     }
   }
-
 
   def fixtures = Action.async { implicit request =>
     (request.getQueryString("competitionId") match {
