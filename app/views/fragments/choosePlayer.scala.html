@@ -1,0 +1,7 @@
+@(fieldName: String, players: List[pa.SquadMember])
+
+<select name="@fieldName" id="id-@fieldName">
+    @for(player <- players) {
+        <option value="@player.playerId">@player.name</option>
+    }
+</select>

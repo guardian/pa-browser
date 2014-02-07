@@ -1,0 +1,24 @@
+@(players: List[pa.SquadMember])
+
+@main("Players") {
+        <h1>Players</h1>
+
+        <form action="/player/card" method="POST">
+            <h2>Player card</h2>
+
+            @views.html.fragments.choosePlayer("player", players)
+
+            <input type="submit" value="Create card" />
+        </form>
+
+        <form action="/player/head2head" method="POST">
+            <h2>Player head to head</h2>
+
+            @views.html.fragments.choosePlayer("player1", players)
+            vs
+            @views.html.fragments.choosePlayer("player2", players)
+
+            <input type="submit" value="Create head2head" />
+        </form>
+
+}
