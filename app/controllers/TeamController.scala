@@ -30,7 +30,7 @@ object TeamController extends Controller with ExecutionContexts {
       val players = squad.map { squadMember =>
         Player(squadMember.playerId, teamId, squadMember.name)
       }
-      Ok(views.html.team.squadImages(players))
+      Ok(views.html.team.squadImages(teamId, players, PA.teams.all))
     }
   }
 
