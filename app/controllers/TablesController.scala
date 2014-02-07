@@ -44,7 +44,7 @@ object TablesController extends Controller with ExecutionContexts {
             val team = tableEntries.find(_.team.id == teamId).get
             before.reverse.take(2).reverse ++ List(team) ++ after.take(2)
         }
-        Ok(views.html.leagueTables.leagueTable(league, entries))
+        Ok(views.html.leagueTables.leagueTable(league, entries, focus))
       }
     } getOrElse Future.successful(InternalServerError(views.html.error("Please provide a valid league")))
   }
