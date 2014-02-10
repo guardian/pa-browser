@@ -3,11 +3,11 @@
 # ~~~~
 
 # Home page
-GET         /                                              controllers.PAApi.index
+GET         /                                              controllers.SiteController.index
 
-GET         /browse                                        controllers.PAApi.browse
-POST        /browserRedirect                               controllers.PAApi.browserSubstitution
-GET         /browser/*query                                controllers.PAApi.browser(query)
+GET         /browse                                        controllers.PaBrowserController.browse
+POST        /browserRedirect                               controllers.PaBrowserController.browserSubstitution
+GET         /browser/*query                                controllers.PaBrowserController.browser(query)
 
 GET         /team                                          controllers.TeamController.teamIndex
 POST        /team/head2head                                controllers.TeamController.redirectToTeamHead2Head
