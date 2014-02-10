@@ -12,7 +12,7 @@ import util.ExecutionContexts
 import xml.Utility.escape
 
 
-class TestPlayerController extends Specification with GetPaClient with ExecutionContexts with NoTimeConversions {
+class PlayerControllerTest extends Specification with GetPaClient with ExecutionContexts with NoTimeConversions {
 
   "test player index loads with players as choices" in new WithApplication {
     val Some(result) = route(FakeRequest(GET, "/player"))

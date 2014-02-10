@@ -12,7 +12,7 @@ import scala.concurrent.duration._
 import util.ExecutionContexts
 
 
-class TestTablesController extends Specification with GetPaClient with ExecutionContexts with NoTimeConversions {
+class TablesControllerTest extends Specification with GetPaClient with ExecutionContexts with NoTimeConversions {
 
   "test tables index page loads with leages" in new WithApplication {
     val Some(result) = route(FakeRequest(GET, "/tables"))
