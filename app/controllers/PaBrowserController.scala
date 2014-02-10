@@ -10,11 +10,7 @@ import java.net.URLDecoder
 import scala.concurrent.Future
 
 
-object PAApi extends Controller with ExecutionContexts {
-
-  def index = Action {
-    Ok(views.html.index())
-  }
+object PaBrowserController extends Controller with ExecutionContexts {
 
   def browserSubstitution = Action { implicit request =>
     val submission = request.body.asFormUrlEncoded.getOrElse { throw new Exception("Could not read POST submission") }
@@ -34,8 +30,8 @@ object PAApi extends Controller with ExecutionContexts {
     SeeOther("/browser/%s".format(replacedQuery.dropWhile('/' ==)))
   }
 
-  def browse = Action.async { implicit request =>
-    Future(Ok(views.html.browse()))
+  def browse = Action { implicit request =>
+    Ok(views.html.browse())
   }
 
   def browser(query: String) = Action.async { implicit request =>
