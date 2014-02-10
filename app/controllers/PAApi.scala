@@ -3,14 +3,14 @@ package controllers
 import play.api._
 import play.api.mvc._
 import play.api.Play.current
-import pa.Client
+import pa.{GetPaClient, Client}
 import util.ExecutionContexts
 import org.joda.time.DateMidnight
 import java.net.URLDecoder
 import scala.concurrent.Future
 
 
-object PAApi extends Controller with ExecutionContexts {
+object PAApi extends Controller with ExecutionContexts with GetPaClient {
 
   def index = Action {
     Ok(views.html.index())
@@ -39,8 +39,8 @@ object PAApi extends Controller with ExecutionContexts {
   }
 
   def browser(query: String) = Action.async { implicit request =>
-    val replacedQuery = URLDecoder.decode(query, "UTF-8").replace("{apiKey}", Client.apiKey)
-    Client.get("/" + replacedQuery).map{ content =>
+    val replacedQuery = URLDecoder.decode(query, "UTF-8").replace("{apiKey}", client.apiKey)
+    client.get("/" + replacedQuery).map{ content =>
       val response = Ok(content)
       if (replacedQuery.contains("/image/")) response.as("image/png")
       else response.as("application/xml")

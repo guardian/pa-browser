@@ -3,7 +3,7 @@ package controllers
 import play.api._
 import play.api.mvc._
 import play.api.Play.current
-import pa.{Player, TeamEventMatch, Client}
+import pa.{GetPaClient, Player, TeamEventMatch, Client}
 import util.{FutureZippers, ExecutionContexts}
 import org.joda.time.DateMidnight
 import java.net.URLDecoder
@@ -12,7 +12,7 @@ import play.api.templates.Html
 import scala.concurrent.Future
 
 
-object TeamController extends Controller with ExecutionContexts {
+object TeamController extends Controller with ExecutionContexts with GetPaClient {
 
   def teamIndex = Action { implicit request =>
     val teams = PA.teams.all
@@ -26,7 +26,7 @@ object TeamController extends Controller with ExecutionContexts {
   }
 
   def squadPictures(teamId: String) = Action.async { request =>
-    Client.squad(teamId).map { squad =>
+    client.squad(teamId).map { squad =>
       val players = squad.map { squadMember =>
         Player(squadMember.playerId, teamId, squadMember.name)
       }
@@ -46,9 +46,9 @@ object TeamController extends Controller with ExecutionContexts {
     val premLeagueId = "100"
 
     FutureZippers.zip(
-      Client.teamHead2Head(team1Id, team2Id, new DateMidnight(2013, 7, 1), DateMidnight.now(), premLeagueId),
-      Client.teamResults(team1Id, new DateMidnight(2013, 7, 1)),
-      Client.teamResults(team2Id, new DateMidnight(2013, 7, 1))
+      client.teamHead2Head(team1Id, team2Id, new DateMidnight(2013, 7, 1), DateMidnight.now(), premLeagueId),
+      client.teamResults(team1Id, new DateMidnight(2013, 7, 1)),
+      client.teamResults(team2Id, new DateMidnight(2013, 7, 1))
     ).map { case ((team1H2H, team2H2H), team1Results, team2Results) =>
       Ok(views.html.team.teamHead2head(
         team1H2H, team2H2H,
