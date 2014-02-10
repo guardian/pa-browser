@@ -1,10 +1,11 @@
 @(team1: pa.Head2Head, team2: pa.Head2Head, team1Results: List[model.PrevResult], team2Results: List[model.PrevResult])
 
 @main("Team head to head") {
+    <hgroup class="page-header">
+        <h1>Teams <small>Head to Head</small></h1>
+    </hgroup>
 
-    <h1>Teams Head to Head</h1>
-
-    <table data-embed-type="data">
+    <table data-embed-type="data" class="table data data--embedded">
         <thead>
             <tr>
                 <th rowspan="2">Team</th>

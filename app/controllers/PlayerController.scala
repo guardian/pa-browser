@@ -13,6 +13,21 @@ import scala.concurrent.Future
 
 object PlayerController extends Controller with ExecutionContexts {
 
+  def playerIndex = Action.async { request =>
+    Future.sequence(PA.teams.prem.map { case (teamId, name) =>
+      Client.squad(teamId)
+    }).map { teamSquads =>
+      val players = teamSquads.flatten.sortBy(_.name)
+      Ok(views.html.player.playerIndex(players))
+    }
+  }
+
+  def redirectToCard = Action { request =>
+    val submission = request.body.asFormUrlEncoded.get
+    val playerId = submission.get("player").get.head
+    SeeOther(s"/player/card/$playerId")
+  }
+
   def playerCard(playerId: String) = Action.async { request =>
     FutureZippers.zip(
       Client.playerProfile(playerId),
@@ -25,6 +40,13 @@ object PlayerController extends Controller with ExecutionContexts {
         case _ => Ok(views.html.player.cards.offensive(playerStats, playerAppearances))
       }
     }
+  }
+
+  def redirectToHead2Head = Action { request =>
+    val submission = request.body.asFormUrlEncoded.get
+    val player1Id = submission.get("player1").get.head
+    val player2Id = submission.get("player2").get.head
+    SeeOther(s"/player/head2head/$player1Id/$player2Id")
   }
 
   def head2Head(player1Id: String, player2Id: String) = Action.async { request =>

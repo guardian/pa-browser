@@ -1,34 +1,11 @@
 @()
 
-@main("PA API browser") {
-
-    <h1>PA browser</h1>
-
-    <p>Copy queries from <a href="http://pads6.pa-sport.com/api/football/">the PA Football documentation</a> into the query box below.</p>
-
-    <form action="/browser" method="POST" class="browser-form">
-        <input type="text" class="query" name="query" />
-        <div class="parameters">
-
+@main("PA browser index") {
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Football stats, tables, player cards and a whole lot more</h1>
+            <p>Let us help you find and publish stats within our rather extensive Press Association football API.</p>
+            <p>Not sure where to start? Take a look at our <a href="/browse">generic API browser</a> or perhaps see what you can do with <a href="/team">teams</a> or <a href="/player">players</a>.</p>
         </div>
-        <input type="submit" value="Perform API query" />
-    </form>
-
-    <h2>Some formatted examples</h2>
-    <ul>
-        <li>
-            <form action="/fixtures">
-                <h3>Fixtures</h3>
-                <label for="fixtures_competitionId">Competition ID</label> <input type="text" name="competitionId" id="fixtures_competitionId" />
-                <input type="submit" value="Go" />
-            </form>
-        </li>
-        <li>
-            <form action="/table">
-                <h3>League tables</h3>
-                <label for="table_competitionId">Competition ID</label> <input type="text" name="competitionId" id="table_competitionId" />
-                <input type="submit" value="Go" />
-            </form>
-        </li>
-    </ul>
+    </div>
 }

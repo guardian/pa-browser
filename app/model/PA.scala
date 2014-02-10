@@ -1,9 +1,39 @@
 package model
 
-import pa.Team
+import pa.{Team, Season}
+import org.joda.time.DateMidnight
 
 
 object PA {
+
+  val competitions: List[Season] = List(
+    Season("100", "785", "Barclays Premier League 13/14", new DateMidnight(2013, 6, 1), new DateMidnight(2014, 5, 31)),
+    Season("101", "786", "Sky Bet Championship 13/14", new DateMidnight(2013, 6, 1), new DateMidnight(2014, 5, 31)),
+    Season("102", "787", "Sky Bet League 1 13/14", new DateMidnight(2013, 6, 1), new DateMidnight(2014, 5, 31)),
+    Season("103", "788", "Sky Bet League 2 13/14", new DateMidnight(2013, 6, 1), new DateMidnight(2014, 5, 31)),
+    Season("104", "789", "The Skrill Premier 13/14", new DateMidnight(2013, 6, 30), new DateMidnight(2014, 6, 29)),
+    Season("120", "790", "Scottish Premiership 13/14", new DateMidnight(2013, 6, 1), new DateMidnight(2014, 5, 31)),
+    Season("121", "791", "Scottish Championship 13/14", new DateMidnight(2013, 6, 1), new DateMidnight(2014, 5, 31)),
+    Season("122", "792", "Scottish League One 13/14", new DateMidnight(2013, 6, 1), new DateMidnight(2014, 5, 31)),
+    Season("123", "793", "Scottish League Two 13/14", new DateMidnight(2013, 6, 1), new DateMidnight(2014, 5, 31)),
+    Season("300", "904", "The FA Cup with Budweiser 13/14", new DateMidnight(2013, 7, 1), new DateMidnight(2014, 6, 30)),
+    Season("301", "905", "Capital One Cup 13/14", new DateMidnight(2013, 6, 1), new DateMidnight(2014, 6, 30)),
+    Season("400", "955", "FA Community Shield 13/14", new DateMidnight(2013, 7, 1), new DateMidnight(2014, 6, 30)),
+    Season("500", "974", "UEFA Champions League 13/14", new DateMidnight(2013, 7, 1), new DateMidnight(2014, 6, 30)),
+    Season("501", "975", "UEFA Champions League Qualifying 13/14", new DateMidnight(2013, 7, 1), new DateMidnight(2014, 6, 30)),
+    Season("510", "976", "UEFA Europa League 13/14", new DateMidnight(2013, 7, 1), new DateMidnight(2014, 6, 30)),
+    Season("511", "977", "UEFA Europa League Qualifying 13/14", new DateMidnight(2013, 7, 1), new DateMidnight(2014, 6, 30)),
+    Season("530", "979", "UEFA Super Cup 13/14", new DateMidnight(2013, 7, 1), new DateMidnight(2014, 6, 30)),
+    Season("620", "992", "French Ligue 1 13/14", new DateMidnight(2013, 7, 1), new DateMidnight(2014, 6, 30)),
+    Season("625", "994", "German Bundesliga 13/14", new DateMidnight(2013, 7, 1), new DateMidnight(2014, 6, 30)),
+    Season("635", "1003", "Italy Serie A 13/14", new DateMidnight(2013, 7, 1), new DateMidnight(2014, 6, 30)),
+    Season("650", "1015", "Spanish Liga BBVA 13/14", new DateMidnight(2013, 7, 1), new DateMidnight(2014, 6, 30)),
+    Season("650", "216", "Spanish Primera Liga BBVA", new DateMidnight(2012, 8, 1), new DateMidnight(2013, 6, 30)),
+    Season("701", "220", "2014 FIFA World Cup qualification (UEFA)", new DateMidnight(2012, 9, 1), new DateMidnight(2014, 1, 1)),
+    Season("721", "783", "International Friendly 2013/2014", new DateMidnight(2013, 5, 25), new DateMidnight(2014, 5, 25)),
+    Season("762", "1191", "American MLS League 13", new DateMidnight(2013, 3, 1), new DateMidnight(2013, 11, 30))
+  )
+
   object teams {
     val prem = List(
       ("1006", "Arsenal"),

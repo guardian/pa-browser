@@ -4,19 +4,28 @@
 
 # Home page
 GET         /                                              controllers.PAApi.index
-POST        /browser                                       controllers.PAApi.browserSubstitution
+
+GET         /browse                                        controllers.PAApi.browse
+POST        /browserRedirect                               controllers.PAApi.browserSubstitution
 GET         /browser/*query                                controllers.PAApi.browser(query)
 
-GET         /fixtures                                      controllers.PAApi.fixtures
-GET         /table                                         controllers.PAApi.leagueTable
-
-GET         /team/head2head                                controllers.TeamController.chooseTeamsHead2Head
+GET         /team                                          controllers.TeamController.teamIndex
 POST        /team/head2head                                controllers.TeamController.redirectToTeamHead2Head
 GET         /team/head2head/:team1Id/:team2Id              controllers.TeamController.teamHead2Head(team1Id: String, team2Id: String)
+POST        /team/images                                   controllers.TeamController.redirectToSquadPictures
 GET         /team/images/:teamId                           controllers.TeamController.squadPictures(teamId: String)
 
+GET         /player                                        controllers.PlayerController.playerIndex
+POST        /player/head2head                              controllers.PlayerController.redirectToHead2Head
 GET         /player/head2head/:player1Id/:player2Id        controllers.PlayerController.head2Head(player1Id: String, player2Id: String)
+POST        /player/card                                   controllers.PlayerController.redirectToCard
 GET         /player/card/:playerId                         controllers.PlayerController.playerCard(playerId: String)
+
+GET         /tables                                        controllers.TablesController.tablesIndex
+POST        /tables/league                                 controllers.TablesController.redirectToTable
+GET         /tables/league/:competitionId                  controllers.TablesController.leagueTable(competitionId: String)
+GET         /tables/league/:competitionId/:focus           controllers.TablesController.leagueTableFragment(competitionId: String, focus: String)
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                                  controllers.Assets.at(path="/public", file)

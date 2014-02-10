@@ -107,5 +107,8 @@ out/
 
 ### Mac ###
 .DS_Store
+
+### SBT stuff so as not to murder the laptops ###
 sbt
-sbt-launch-*
+sbt-*
+

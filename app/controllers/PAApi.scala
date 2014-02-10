@@ -7,6 +7,7 @@ import pa.Client
 import util.ExecutionContexts
 import org.joda.time.DateMidnight
 import java.net.URLDecoder
+import scala.concurrent.Future
 
 
 object PAApi extends Controller with ExecutionContexts {
@@ -33,30 +34,16 @@ object PAApi extends Controller with ExecutionContexts {
     SeeOther("/browser/%s".format(replacedQuery.dropWhile('/' ==)))
   }
 
+  def browse = Action.async { implicit request =>
+    Future(Ok(views.html.browse()))
+  }
+
   def browser(query: String) = Action.async { implicit request =>
     val replacedQuery = URLDecoder.decode(query, "UTF-8").replace("{apiKey}", Client.apiKey)
     Client.get("/" + replacedQuery).map{ content =>
       val response = Ok(content)
       if (replacedQuery.contains("/image/")) response.as("image/png")
       else response.as("application/xml")
-    }
-  }
-
-
-  def fixtures = Action.async { implicit request =>
-    (request.getQueryString("competitionId") match {
-      case None => Client.fixtures
-      case Some(competitionId) => Client.fixtures(competitionId)
-    }).map { fixtures =>
-      Ok(views.html.fixtures(fixtures))
-    }
-  }
-
-  def leagueTable = Action.async { implicit request =>
-
-    val competitionId = request.getQueryString("competitionId").getOrElse { throw new Exception("Please provide a competitionId parameter") }
-    Client.leagueTable(competitionId, DateMidnight.now()).map { leagueTableEntries =>
-      Ok(views.html.tables(leagueTableEntries))
     }
   }
 
