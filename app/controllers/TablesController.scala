@@ -3,7 +3,7 @@ package controllers
 import play.api._
 import play.api.mvc._
 import play.api.Play.current
-import pa.{LeagueTableEntry, Player, TeamEventMatch, Client}
+import pa._
 import util.{FutureZippers, ExecutionContexts}
 import org.joda.time.DateMidnight
 import java.net.URLDecoder
@@ -12,7 +12,7 @@ import play.api.templates.Html
 import scala.concurrent.Future
 
 
-object TablesController extends Controller with ExecutionContexts {
+object TablesController extends Controller with ExecutionContexts with GetPaClient {
 
   def tablesIndex = Action { request =>
     Ok(views.html.leagueTables.tablesIndex(PA.competitions, PA.teams.all))
@@ -33,7 +33,7 @@ object TablesController extends Controller with ExecutionContexts {
 
   def leagueTableFragment(competitionId: String, focus: String) = Action.async { request =>
     PA.competitions.find(_.competitionId == competitionId).map { league =>
-      Client.leagueTable(league.competitionId, DateMidnight.now()).map { tableEntries =>
+      client.leagueTable(league.competitionId, DateMidnight.now()).map { tableEntries =>
         val entries = focus match {
           case "top" => tableEntries.take(5)
           case "bottom" => tableEntries.reverse.take(5).reverse
@@ -51,7 +51,7 @@ object TablesController extends Controller with ExecutionContexts {
 
   def leagueTable(competitionId: String) = Action.async { request =>
     PA.competitions.find(_.competitionId == competitionId).map { league =>
-      Client.leagueTable(league.competitionId, DateMidnight.now()).map { tableEntries =>
+      client.leagueTable(league.competitionId, DateMidnight.now()).map { tableEntries =>
         Ok(views.html.leagueTables.leagueTable(league, tableEntries))
       }
     } getOrElse Future.successful(InternalServerError(views.html.error("Please provide a valid league")))

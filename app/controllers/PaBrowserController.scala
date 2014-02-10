@@ -3,18 +3,14 @@ package controllers
 import play.api._
 import play.api.mvc._
 import play.api.Play.current
-import pa.Client
+import pa.{GetPaClient, Client}
 import util.ExecutionContexts
 import org.joda.time.DateMidnight
 import java.net.URLDecoder
 import scala.concurrent.Future
 
 
-object PAApi extends Controller with ExecutionContexts {
-
-  def index = Action {
-    Ok(views.html.index())
-  }
+object PaBrowserController extends Controller with ExecutionContexts with GetPaClient {
 
   def browserSubstitution = Action { implicit request =>
     val submission = request.body.asFormUrlEncoded.getOrElse { throw new Exception("Could not read POST submission") }
@@ -34,13 +30,13 @@ object PAApi extends Controller with ExecutionContexts {
     SeeOther("/browser/%s".format(replacedQuery.dropWhile('/' ==)))
   }
 
-  def browse = Action.async { implicit request =>
-    Future(Ok(views.html.browse()))
+  def browse = Action { implicit request =>
+    Ok(views.html.browse())
   }
 
   def browser(query: String) = Action.async { implicit request =>
-    val replacedQuery = URLDecoder.decode(query, "UTF-8").replace("{apiKey}", Client.apiKey)
-    Client.get("/" + replacedQuery).map{ content =>
+    val replacedQuery = URLDecoder.decode(query, "UTF-8").replace("{apiKey}", client.apiKey)
+    client.get("/" + replacedQuery).map{ content =>
       val response = Ok(content)
       if (replacedQuery.contains("/image/")) response.as("image/png")
       else response.as("application/xml")
